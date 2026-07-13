@@ -5,6 +5,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        // Creativity Upgrade: Added sorting by date and CSV save/load
         Journal journal = new Journal();
         Random random = new Random();
 
@@ -18,14 +19,16 @@ class Program
         };
 
         string choice = "";
-        while (choice != "5")
+        while (choice != "7")
         {
             Console.WriteLine("Menu:");
             Console.WriteLine("1. Write a new entry");
             Console.WriteLine("2. Display the journal");
-            Console.WriteLine("3. Save the journal to a file");
-            Console.WriteLine("4. Load the journal from a file");
-            Console.WriteLine("5. Quit");
+            Console.WriteLine("3. Display journal sorted by date");
+            Console.WriteLine("4. Save the journal to a CSV file");
+            Console.WriteLine("5. Load the journal from a CSV file");
+            Console.WriteLine("6. Save the journal to a text file (basic)");
+            Console.WriteLine("7. Quit");
             Console.Write("Choose an option: ");
             choice = Console.ReadLine();
 
@@ -45,15 +48,26 @@ class Program
             }
             else if (choice == "3")
             {
-                Console.Write("Enter filename: ");
-                string filename = Console.ReadLine();
-                journal.SaveToFile(filename);
+                journal.DisplayJournalSorted();
             }
             else if (choice == "4")
             {
-                Console.Write("Enter filename: ");
+                Console.Write("Enter CSV filename: ");
                 string filename = Console.ReadLine();
-                journal.LoadFromFile(filename);
+                journal.SaveToCsv(filename);
+            }
+            else if (choice == "5")
+            {
+                Console.Write("Enter CSV filename: ");
+                string filename = Console.ReadLine();
+                journal.LoadFromCsv(filename);
+            }
+            else if (choice == "6")
+            {
+                Console.Write("Enter text filename: ");
+                string filename = Console.ReadLine();
+                // fallback basic save (pipe-separated)
+                journal.SaveToCsv(filename);
             }
         }
     }

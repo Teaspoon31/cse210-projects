@@ -20,14 +20,20 @@ public class Entry
         Console.WriteLine();
     }
 
-    public string ToFileFormat()
+    // Save entry in CSV format (quotes handle commas safely)
+    public string ToCsv()
     {
-        return $"{_date}|{_prompt}|{_response}";
+        return $"\"{_date}\",\"{_prompt}\",\"{_response}\"";
     }
 
-    public static Entry FromFileFormat(string line)
+    public static Entry FromCsv(string line)
     {
-        string[] parts = line.Split('|');
-        return new Entry(parts[0], parts[1], parts[2]);
+        string[] parts = line.Split("\",\"");
+        string date = parts[0].Trim('"');
+        string prompt = parts[1].Trim('"');
+        string response = parts[2].Trim('"');
+        return new Entry(date, prompt, response);
     }
+
+    public string Date => _date;
 }
